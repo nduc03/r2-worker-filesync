@@ -24,18 +24,13 @@ export default {
 		}
 
 		if (!path.startsWith('/file/')) return new Response('Not Found', { status: 404 });
-		const filePath = path.substring('/file/'.length);
-		if (!filePath) {
+		const filePath = path.substring('/file'.length).replace(/\/+$/, '');
+		if (!filePath || filePath === '/') {
 			return new Response('Filename missing', { status: 400 });
 		}
 
 		// --- File Download API ---
 		if (request.method === 'GET') {
-			// const filePath = path.substring('/files/'.length);
-			// if (!filePath) {
-			// 	return new Response('Filename missing', { status: 400 });
-			// }
-
 			const objectName = await db.getObjectName(env.DB, filePath);
 			if (!objectName) {
 				return new Response('File not found', { status: 404 });
@@ -62,9 +57,8 @@ export default {
 			});
 		}
 
-		// TODO --- File Upload API ---
+		// --- File Upload API ---
 		if (request.method === 'POST') {
-			// const formData = await request.formData();
 			const fileData = request.body;
 			if (!fileData) {
 				return new Response('No file data provided', { status: 400 });
@@ -81,11 +75,6 @@ export default {
 
 			try {
 				await env.MY_BUCKET.put(objectName, fileData);
-
-				// Update version and notify (simple implementation)
-				// const newVersion = (fileVersions.get(filePath) || 0) + 1;
-				// fileVersions.set(filePath, newVersion);
-				// notifyClients(filePath, 'uploaded', newVersion, clientId); // Notify other clients
 
 				return new Response(`File ${filePath} uploaded successfully.`, { status: 200 });
 			} catch (e: any) {

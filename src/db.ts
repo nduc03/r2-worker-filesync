@@ -3,7 +3,6 @@ import { randomBytes } from 'crypto';
 type MetadataRow = {
     Id: string;
     object_name: string;
-    // file_type: string;
     file_path: string;
     version: number;
 };
@@ -94,4 +93,26 @@ export async function editFile(db: D1Database, filePath: string): Promise<string
 export async function deleteFile(db: D1Database, filePath: string): Promise<void> {
     const query = `DELETE FROM file_metadata WHERE file_path = ?`;
     await db.prepare(query).bind(filePath).run();
+}
+
+/**
+ * List all files in a directory
+ * @param db D1Database
+ * @param directoryPath Directory path to list files from
+ * @returns Array of MetadataRow
+ */
+export async function listFiles(db: D1Database, directoryPath: string = '/'): Promise<MetadataRow[]> {
+    // todo need to test the directory path
+    const query = `
+    SELECT * FROM file_metadata WHERE file_path LIKE ? || '%'
+    `
+    if (!directoryPath.endsWith('/')) {
+        directoryPath += '/';
+    }
+    const result = await db.prepare(query).bind(directoryPath).all<MetadataRow>();
+
+    if (!result.success || !result.results)
+        throw new Error('Cannot query this directory path.');
+
+    return result.results;
 }
