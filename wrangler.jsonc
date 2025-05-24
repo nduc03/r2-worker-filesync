@@ -7,6 +7,9 @@
 	"name": "r2-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-05-21",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"observability": {
 		"enabled": true
 	},
@@ -17,12 +20,12 @@
 		}
 	],
 	"d1_databases": [
-       {
-         "binding": "DB",
-         "database_name": "file_metadata",
-         "database_id": "1"
-       }
-     ]
+		{
+			"binding": "DB",
+			"database_name": "file-db",
+			"database_id": "file-db"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

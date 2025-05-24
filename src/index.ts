@@ -50,14 +50,14 @@ export default {
 			const headers = new Headers();
 			object.writeHttpMetadata(headers);
 			headers.set('etag', object.httpEtag);
-			headers.set('Content-Disposition', `attachment; filename="${filePath}"`); // Prompt download
+			headers.set('Content-Disposition', `attachment; filename="${filename}"`); // Prompt download
 
 			return new Response(object.body, {
 				headers,
 			});
 		}
 
-		// --- File Upload API ---
+		// --- File Upload/Edit API ---
 		if (request.method === 'POST') {
 			const fileData = request.body;
 			if (!fileData) {
@@ -65,10 +65,15 @@ export default {
 			}
 			let objectName = await db.getObjectName(env.DB, filePath);
 			if (objectName) {
+				// Edit if file exists
 				env.MY_BUCKET.delete(objectName);
 				objectName = await db.editFile(env.DB, filePath);
 			}
-			else objectName = await db.addObject(env.DB, filePath);
+			else {
+				// else, add a new file
+				objectName = await db.addObject(env.DB, filePath);
+			}
+
 			if (!objectName) {
 				return new Response('Failed to generate object name', { status: 500 });
 			}
@@ -82,14 +87,36 @@ export default {
 			}
 		}
 
-		// TODO --- File Delete API ---
+		// --- File Delete API ---
 		if (request.method === 'DELETE') {
-			// TODO
+			const objectName = await db.getObjectName(env.DB, filePath);
+			if (!objectName) {
+				return new Response('File not found', { status: 404 });
+			}
+			try {
+				await env.MY_BUCKET.delete(objectName);
+				await db.deleteFile(env.DB, filePath);
+				return new Response(`File ${filePath} deleted successfully.`, { status: 200 });
+			}
+			catch (e: any) {
+				return new Response(`Error deleting file: ${e.message}`, { status: 500 });
+			}
 		}
 
-		// TODO --- File metadata API ---
+		// --- File Metadata API ---
 		if (request.method === 'HEAD') {
-			// TODO
+			const fileMetadata = await db.getFileMetadata(env.DB, filePath);
+			if (!fileMetadata) {
+				return new Response('File not found', { status: 404 });
+			}
+			const headers = new Headers();
+			headers.set('version', fileMetadata.version.toString());
+			headers.set('object_name', fileMetadata.object_name);
+			headers.set('file_path', fileMetadata.file_path);
+			return new Response(null, {
+				status: 200,
+				headers,
+			});
 		}
 
 		return new Response('Not Found', { status: 404 });

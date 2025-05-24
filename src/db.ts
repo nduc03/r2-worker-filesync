@@ -1,11 +1,15 @@
 import { randomBytes } from 'crypto';
 
 type MetadataRow = {
-    Id: string;
+    id?: string;
     object_name: string;
     file_path: string;
     version: number;
 };
+
+function randomFilename(): string {
+    return randomBytes(16).toString('hex');
+}
 
 async function isObjectNameExists(db: D1Database, objectName: string): Promise<boolean | null> {
     const query = `SELECT COUNT(*) as count FROM file_metadata WHERE object_name = ?`;
@@ -21,8 +25,8 @@ async function isFilePathExists(db: D1Database, filePath: string): Promise<boole
     });
 }
 
-async function generateObjectName(db:D1Database): Promise<string> {
-    let objectName = randomBytes(32).toString('hex');
+async function generateObjectName(db: D1Database): Promise<string> {
+    let objectName = randomFilename();
     if (!objectName) {
         throw new Error('Failed to generate object name');
     }
@@ -31,7 +35,7 @@ async function generateObjectName(db:D1Database): Promise<string> {
         if (!exists) {
             break;
         }
-        objectName = randomBytes(32).toString('hex');
+        objectName = randomFilename();
     }
     return objectName;
 }
@@ -56,7 +60,7 @@ export async function addObject(db: D1Database, filePath: string): Promise<strin
         throw new Error(`File path already exists. You may want to use ${editFile.name} instead.`);
     }
 
-    const query = `INSERT INTO file_metadata (object_name, file_path) VALUES (?, ?)`;
+    const query = `INSERT INTO file_metadata (object_name, file_path, version) VALUES (?, ?, 1)`;
     await db.prepare(query).bind(objectName, filePath).run();
     return objectName;
 }
@@ -104,7 +108,7 @@ export async function deleteFile(db: D1Database, filePath: string): Promise<void
 export async function listFiles(db: D1Database, directoryPath: string = '/'): Promise<MetadataRow[]> {
     // todo need to test the directory path
     const query = `
-    SELECT * FROM file_metadata WHERE file_path LIKE ? || '%'
+    SELECT object_name, file_path, version FROM file_metadata WHERE file_path LIKE ? || '%'
     `
     if (!directoryPath.endsWith('/')) {
         directoryPath += '/';
@@ -115,4 +119,15 @@ export async function listFiles(db: D1Database, directoryPath: string = '/'): Pr
         throw new Error('Cannot query this directory path.');
 
     return result.results;
+}
+
+/**
+ * Get file metadata by file path
+ * @param db D1Database
+ * @param filePath File path to get metadata for
+ * @returns MetadataRow or null if not found
+ */
+export async function getFileMetadata(db: D1Database, filePath: string): Promise<MetadataRow | null> {
+    const query = `SELECT object_name, file_path, version FROM file_metadata WHERE file_path = ?`;
+    return await db.prepare(query).bind(filePath).first<MetadataRow>();
 }
