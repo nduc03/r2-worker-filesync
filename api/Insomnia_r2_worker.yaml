@@ -1,0 +1,169 @@
+type: collection.insomnia.rest/5.0
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1743949911314
+  modified: 1743949911314
+collection:
+  - url: "{{base}}/api/list"
+    name: lấy thông tin tất cả file
+    meta:
+      id: req_2dcac55151044cc3bd9af1ea0e453a95
+      created: 1748045170308
+      modified: 1748050060870
+      isPrivate: false
+      sortKey: -1748045170308
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/file/testdir/testfile.txt"
+    name: lấy thông tin file
+    meta:
+      id: req_d297f106a8a84f258894a2ed7ad3b445
+      created: 1748045505483
+      modified: 1748050562815
+      isPrivate: false
+      sortKey: -1748045505483
+    method: HEAD
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/file/testdir/testfile.txt"
+    name: upload file
+    meta:
+      id: req_889c3ec69a5f4139949b79d6bd163f30
+      created: 1748048046032
+      modified: 1748051647971
+      isPrivate: false
+      sortKey: -1748048361663
+    method: POST
+    body:
+      mimeType: text/plain
+      text: |-
+        test file content 2
+        blablabla 2
+    headers:
+      - name: Content-Type
+        value: text/plain
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/file/testdir/testfile.txt"
+    name: download file
+    meta:
+      id: req_4a9f11f5d9b44cdb930625760b365bbc
+      created: 1748048361563
+      modified: 1748050535481
+      isPrivate: false
+      sortKey: -1748048361563
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/api/file/testdir/testfile.txt"
+    name: lấy thông tin file json
+    meta:
+      id: req_5266bd7e4d2f4946b404f50bb6ef9d5c
+      created: 1748048718999
+      modified: 1748050586696
+      isPrivate: false
+      sortKey: -1748045337895.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/api/list/testdir"
+    name: thông tin tất cả file trong testdir
+    meta:
+      id: req_3d8bddbd7ca7409181a26798bb54d2dd
+      created: 1748050839567
+      modified: 1748050931083
+      isPrivate: false
+      sortKey: -1748045170258
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{base}}/file/testdir/testfile2.txt"
+    name: xóa file đã upload
+    meta:
+      id: req_6776cc3d08984ed5b4007b78825a6bc5
+      created: 1748051455371
+      modified: 1748051606766
+      isPrivate: false
+      sortKey: -1748046933523
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1748045148613
+    modified: 1748045148613
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1748045148448
+    modified: 1748050008507
+    isPrivate: false
+  data:
+    base: localhost:8787
