@@ -1,0 +1,531 @@
+{
+	"info": {
+		"_postman_id": "8c486c2d-7503-466e-a38d-7a1f875b5f70",
+		"name": "Cloudflare R2 Worker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18284938"
+	},
+	"item": [
+		{
+			"name": "upload file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"file",
+						"testdir",
+						"testfile.txt"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "upload response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/plain"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "test2",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"file",
+								"testdir",
+								"testfile.txt"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "File /testdir/testfile.txt uploaded successfully."
+				}
+			]
+		},
+		{
+			"name": "download file",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"file",
+						"testdir",
+						"testfile.txt"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "download response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"file",
+								"testdir",
+								"testfile.txt"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Disposition",
+							"value": "attachment; filename=\"testfile.txt\""
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "ETag",
+							"value": "\"ad0234829205b9033196ba818f7a872b\""
+						}
+					],
+					"cookie": [],
+					"body": "test2"
+				}
+			]
+		},
+		{
+			"name": "xóa file",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/file/testdir/testfile2.txt",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"file",
+						"testdir",
+						"testfile2.txt"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "xóa file response",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/file/testdir/testfile2.txt",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"file",
+								"testdir",
+								"testfile2.txt"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "File /testdir/testfile2.txt deleted successfully."
+				}
+			]
+		},
+		{
+			"name": "thông tin file",
+			"request": {
+				"method": "HEAD",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"file",
+						"testdir",
+						"testfile.txt"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "thông tin file",
+					"originalRequest": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/file/testdir/testfile.txt",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"file",
+								"testdir",
+								"testfile.txt"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "file_path",
+							"value": "/testdir/testfile.txt"
+						},
+						{
+							"key": "object_name",
+							"value": "86a61163e4862a8ced0807fe64dbd2b6"
+						},
+						{
+							"key": "version",
+							"value": "6"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "thông tin file json",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/api/file/testdir/testfile.txt",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"file",
+						"testdir",
+						"testfile.txt"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "thông tin file json",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/file/testdir/testfile.txt",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"testdir",
+								"testfile.txt"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date"
+						}
+					],
+					"body": "{\n    \"object_name\": \"86a61163e4862a8ced0807fe64dbd2b6\",\n    \"file_path\": \"/testdir/testfile.txt\",\n    \"version\": 6\n}"
+				}
+			]
+		},
+		{
+			"name": "thông tin toàn bộ file",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/api/list",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"list"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "thông tin toàn bộ file",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/list",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"list"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date"
+						}
+					],
+					"body": "[\n    {\n        \"object_name\": \"2299556cbe41fd0a92e8ec74924eae8a8c414f3258c1298b253616ef7e37aae9\",\n        \"file_path\": \"/test/text.txt\",\n        \"version\": 2\n    },\n    {\n        \"object_name\": \"86a61163e4862a8ced0807fe64dbd2b6\",\n        \"file_path\": \"/testdir/testfile.txt\",\n        \"version\": 6\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "thông tin toàn bộ /testdir",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "insomnia/11.0.2"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/api/list/testdir",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"list",
+						"testdir"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "thông tin toàn bộ /testdir",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "insomnia/11.0.2"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/list/testdir",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"list",
+								"testdir"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date"
+						}
+					],
+					"body": "[\n    {\n        \"object_name\": \"86a61163e4862a8ced0807fe64dbd2b6\",\n        \"file_path\": \"/testdir/testfile.txt\",\n        \"version\": 6\n    }\n]"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL1",
+			"value": "http://localhost:8787",
+			"type": "any"
+		}
+	]
+}
